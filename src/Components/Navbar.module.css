@@ -1,0 +1,14 @@
+.logo {
+	width: 49px;
+	height: 49px;
+	margin: 0 24px;
+}
+.exerciseLink {
+	text-decoration: none;
+	color: #3a1212;
+}
+.homeLink {
+	text-decoration: none;
+	color: #3a1212;
+	border-bottom: 3px solid #ff2625;
+}
