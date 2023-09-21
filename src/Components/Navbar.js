@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Stack } from '@mui/material'
 import Logo from '../assets/images/Logo.png'
 import styles from './Navbar.module.css'
+// import ExerciseDetail from '../pages/ExerciseDetail'
 
 const Navbar = () => {
 	return (
@@ -25,6 +26,7 @@ const Navbar = () => {
 				<a href="#exercise" className={styles.exerciseLink}>
 					Exercise
 				</a>
+				{/* <Link to={`/exercise/${exercise.id}`}>Exercise</Link> */}
 			</Stack>
 		</Stack>
 	)

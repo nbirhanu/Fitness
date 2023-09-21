@@ -1,11 +1,40 @@
 import React from 'react'
 import { Stack, Box, Typography, TextField, Button, colors } from '@mui/material'
 import { useState, useEffect } from 'react'
+import { fetchData, exerciseOption } from '../utils/fetchData'
+import HorizontalScroll from './HorizontalScroll'
+import { useAuth } from './AuthContext'
 const SearchExercise = () => {
-	const [search, setSearch] = useState('')
+	const { search, setSearch, exercise, setExercise, bodyParts, setBodyParts } = useAuth()
+
+	//
+	useEffect(function () {
+		const fetchBodyPartData = async function () {
+			const bodyPartData = await fetchData(
+				`https://exercisedb.p.rapidapi.com/exercises/bodyPartList`,
+				exerciseOption
+			)
+			setBodyParts(['all', ...bodyPartData])
+		}
+		fetchBodyPartData()
+	}, [])
+	//
 	const handleSearch = async function () {
 		if (search) {
-			// const exerciseData = await fetchData()
+			const exerciseData = await fetchData(
+				`https://exercisedb.p.rapidapi.com/exercises`,
+				exerciseOption
+			)
+
+			const searchedExercise = exerciseData.filter(
+				exercise =>
+					exercise.name.toLowerCase().includes(search) ||
+					exercise.target.toLowerCase().includes(search) ||
+					exercise.equipment.toLowerCase().includes(search) ||
+					exercise.bodyPart.toLowerCase().includes(search)
+			)
+			setSearch('')
+			setExercise(searchedExercise)
 		}
 	}
 	return (
@@ -18,7 +47,7 @@ const SearchExercise = () => {
 				Awesome Exercise You <br /> Should Know
 			</Typography>
 
-			<Box position="relative" mb="172px">
+			<Box position="relative">
 				<TextField
 					sx={{
 						input: { fontWeight: '700', borderRadius: '4px', border: 'none' },
@@ -44,6 +73,9 @@ const SearchExercise = () => {
 					}}>
 					Search
 				</Button>
+			</Box>
+			<Box sx={{ position: 'relative', width: '100%', padding: '20px' }}>
+				<HorizontalScroll />
 			</Box>
 		</Stack>
 	)
